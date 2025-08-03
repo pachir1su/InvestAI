@@ -12,7 +12,7 @@ InvestAI는 뉴스와 소셜 미디어 데이터를 분석하여 시장의 Fear/
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install fastapi uvicorn requests redis psycopg2-binary konlpy
+pip install -r requirements.txt
 ```
 
 ### 데이터 수집기
