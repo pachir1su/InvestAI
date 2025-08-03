@@ -39,6 +39,8 @@ python data-collector/scheduler.py
 uvicorn api.main:app --reload
 ```
 
+환율과 주가 API는 여러 심볼을 `symbols` 파라미터를 반복해 전달합니다. 예: `/api/rates?symbols=USD&symbols=EUR`.
+
 ### 위젯 사용
 정적 호스팅 또는 기존 페이지에 `widget/widget.js`, `widget/sentimentWidget.js`를 포함하고
 `startPolling` 및 `startSentimentPolling` 함수를 호출하여 DOM을 업데이트합니다.

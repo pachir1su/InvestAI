@@ -27,13 +27,17 @@ def calculate_score(target: str) -> dict:
         texts = [row[0] for row in cur.fetchall()]
         cur.execute("SELECT text FROM raw_tweets WHERE target=%s", (target,))
         texts += [row[0] for row in cur.fetchall()]
+    r = redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379/0"))
+    if not texts:
+        result = {"fear": 0.0, "greed": 0.0}
+        r.setex(f"sentiment:{target}", 60, json.dumps(result))
+        return result
 
     scores = [_token_scores(t) for t in texts]
-    fear = sum(1 for s in scores if s < 0) / max(1, len(scores))
-    greed = sum(1 for s in scores if s > 0) / max(1, len(scores))
+    fear = sum(1 for s in scores if s < 0) / len(scores)
+    greed = sum(1 for s in scores if s > 0) / len(scores)
     result = {"fear": fear, "greed": greed}
 
-    r = redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379/0"))
     r.setex(f"sentiment:{target}", 60, json.dumps(result))
     return result
 

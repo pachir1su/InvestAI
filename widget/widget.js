@@ -1,5 +1,6 @@
 // 실시간 시세 위젯
 export async function updateRates(symbols) {
+  if (!symbols.length) return;
   try {
     const params = new URLSearchParams();
     symbols.forEach((s) => params.append('symbols', s));
@@ -16,6 +17,7 @@ export async function updateRates(symbols) {
 }
 
 export async function updateStocks(symbols) {
+  if (!symbols.length) return;
   try {
     const params = new URLSearchParams();
     symbols.forEach((s) => params.append('symbols', s));
