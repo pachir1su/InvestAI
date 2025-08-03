@@ -2,26 +2,29 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>InvestAI Widget Demo</title>
-  <style>
-    body { font-family: sans-serif; }
-    .section { margin-bottom: 1rem; }
-  </style>
+  <title>InvestAI Dashboard</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <div class="section">
-    <h2>환율</h2>
-    <div>USD: <span data-rate="USD">-</span></div>
-    <div>EUR: <span data-rate="EUR">-</span></div>
-  </div>
-  <div class="section">
-    <h2>주가</h2>
-    <div>AAPL: <span data-stock="AAPL">-</span></div>
-  </div>
-  <div class="section">
-    <h2>감정 지수 (KOSPI)</h2>
-    <div>Fear: <span data-fear="KOSPI">-</span></div>
-    <div>Greed: <span data-greed="KOSPI">-</span></div>
+  <h1>InvestAI 대시보드</h1>
+  <div class="cards">
+    <div class="card">
+      <h2>환율</h2>
+      <div class="row"><span>USD</span><span data-rate="USD">-</span></div>
+      <div class="row"><span>EUR</span><span data-rate="EUR">-</span></div>
+    </div>
+    <div class="card">
+      <h2>주가</h2>
+      <div class="row"><span>AAPL</span><span data-stock="AAPL">-</span></div>
+    </div>
+    <div class="card">
+      <h2>감정 지수 (KOSPI)</h2>
+      <div class="row"><span>Fear</span><span data-fear="KOSPI">-</span></div>
+      <div class="bar-container"><div class="bar" data-fear-bar="KOSPI"></div></div>
+      <div class="row"><span>Greed</span><span data-greed="KOSPI">-</span></div>
+      <div class="bar-container"><div class="bar green" data-greed-bar="KOSPI"></div></div>
+    </div>
+
   </div>
 
   <script type="module">
