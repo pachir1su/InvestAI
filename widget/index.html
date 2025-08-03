@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>InvestAI Widget Demo</title>
+  <style>
+    body { font-family: sans-serif; }
+    .section { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="section">
+    <h2>환율</h2>
+    <div>USD: <span data-rate="USD">-</span></div>
+    <div>EUR: <span data-rate="EUR">-</span></div>
+  </div>
+  <div class="section">
+    <h2>주가</h2>
+    <div>AAPL: <span data-stock="AAPL">-</span></div>
+  </div>
+  <div class="section">
+    <h2>감정 지수 (KOSPI)</h2>
+    <div>Fear: <span data-fear="KOSPI">-</span></div>
+    <div>Greed: <span data-greed="KOSPI">-</span></div>
+  </div>
+
+  <script type="module">
+    import { startPolling } from './widget.js';
+    import { startSentimentPolling } from './sentimentWidget.js';
+
+    startPolling(['USD', 'EUR'], ['AAPL']);
+    startSentimentPolling('KOSPI');
+  </script>
+</body>
+</html>
