@@ -4,6 +4,7 @@ export async function updateRates(symbols) {
   try {
     const params = new URLSearchParams();
     symbols.forEach((s) => params.append('symbols', s));
+
       const res = await fetch(`/api/rates?${params.toString()}`);
       if (!res.ok) return;
       const data = await res.json();

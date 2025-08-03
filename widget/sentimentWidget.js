@@ -11,6 +11,7 @@ export async function updateSentiment(target) {
   const greedBar = document.querySelector(`[data-greed-bar="${target}"]`);
   if (fearBar) fearBar.style.width = `${fear}%`;
   if (greedBar) greedBar.style.width = `${greed}%`;
+
 }
 
 export function startSentimentPolling(target) {
