@@ -13,10 +13,12 @@ export async function updateRates(symbols) {
     }
   } catch (err) {
     console.error('Failed to update rates', err);
+
   }
 }
 
 export async function updateStocks(symbols) {
+
   if (!symbols.length) return;
   try {
     const params = new URLSearchParams();
@@ -30,6 +32,7 @@ export async function updateStocks(symbols) {
     }
   } catch (err) {
     console.error('Failed to update stocks', err);
+
   }
 }
 

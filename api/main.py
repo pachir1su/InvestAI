@@ -1,7 +1,6 @@
 """FastAPI 기반 백엔드 서버."""
 import json
 import os
-
 from fastapi import FastAPI, HTTPException, Query
 import redis
 
@@ -18,9 +17,10 @@ def get_sentiment(target: str):
 
 
 @app.get("/api/rates")
-def get_rates(symbols: list[str] = Query(...)):
+def get_rates(symbols: str):
     result = {}
-    for sym in symbols:
+    for sym in symbols.split(","):
+
         data = r.get(f"rates:{sym}")
         if data:
             result[sym] = json.loads(data)["value"]
@@ -28,9 +28,10 @@ def get_rates(symbols: list[str] = Query(...)):
 
 
 @app.get("/api/stock")
-def get_stock(symbols: list[str] = Query(...)):
+
+def get_stock(symbols: str):
     result = {}
-    for sym in symbols:
+    for sym in symbols.split(","):
         data = r.get(f"price:{sym}")
         if data:
             result[sym] = json.loads(data)["price"]

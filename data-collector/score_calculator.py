@@ -1,18 +1,17 @@
 """수집된 텍스트를 기반으로 Fear/Greed 지표를 계산합니다."""
 import json
 import os
-
+from typing import List
 import psycopg2
 import redis
 from konlpy.tag import Okt
 
 WORD_SCORES = {"하락": -1, "폭락": -2, "상승": 1, "호재": 2}
 
-OKT = Okt()
-
 
 def _token_scores(text: str) -> int:
-    tokens = OKT.morphs(text)
+    okt = Okt()
+    tokens = okt.morphs(text)
     return sum(WORD_SCORES.get(tok, 0) for tok in tokens)
 
 
@@ -27,6 +26,7 @@ def calculate_score(target: str) -> dict:
         texts = [row[0] for row in cur.fetchall()]
         cur.execute("SELECT text FROM raw_tweets WHERE target=%s", (target,))
         texts += [row[0] for row in cur.fetchall()]
+
     r = redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379/0"))
     if not texts:
         result = {"fear": 0.0, "greed": 0.0}
@@ -37,6 +37,7 @@ def calculate_score(target: str) -> dict:
     fear = sum(1 for s in scores if s < 0) / len(scores)
     greed = sum(1 for s in scores if s > 0) / len(scores)
     result = {"fear": fear, "greed": greed}
+
 
     r.setex(f"sentiment:{target}", 60, json.dumps(result))
     return result

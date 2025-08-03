@@ -27,24 +27,18 @@ fetch_stock(["AAPL"])
 PY
 ```
 
-### 스케줄러
-`TARGETS` 환경 변수로 대상 심볼을 지정한 뒤 실행하면 1분 간격으로 수집하고 5분마다 점수를 갱신합니다.
-```bash
-export TARGETS=KOSPI,AAPL
-python data-collector/scheduler.py
-```
 
 ### API 서버
 ```bash
 uvicorn api.main:app --reload
 ```
 
-환율과 주가 API는 여러 심볼을 `symbols` 파라미터를 반복해 전달합니다. 예: `/api/rates?symbols=USD&symbols=EUR`.
 
 ### 위젯 사용
 정적 호스팅 또는 기존 페이지에 `widget/widget.js`, `widget/sentimentWidget.js`를 포함하고
 `startPolling` 및 `startSentimentPolling` 함수를 호출하여 DOM을 업데이트합니다.
 `widget/index.html` 예제 페이지를 `python -m http.server -d widget`로 띄워 테스트할 수 있습니다.
+
 
 ## 기여 가이드
 1. 이슈를 확인하고 작업할 내용을 선택합니다.
