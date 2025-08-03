@@ -1,0 +1,7 @@
+apscheduler
+fastapi
+konlpy
+psycopg2-binary
+redis
+requests
+uvicorn
