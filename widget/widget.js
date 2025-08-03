@@ -1,7 +1,9 @@
 // 실시간 시세 위젯
 export async function updateRates(symbols) {
   try {
-    const res = await fetch(`/api/rates?symbols=${symbols.join(',')}`);
+    const params = new URLSearchParams();
+    symbols.forEach((s) => params.append('symbols', s));
+    const res = await fetch(`/api/rates?${params.toString()}`);
     if (!res.ok) return;
     const data = await res.json();
     for (const [sym, value] of Object.entries(data)) {
@@ -15,7 +17,9 @@ export async function updateRates(symbols) {
 
 export async function updateStocks(symbols) {
   try {
-    const res = await fetch(`/api/stock?symbols=${symbols.join(',')}`);
+    const params = new URLSearchParams();
+    symbols.forEach((s) => params.append('symbols', s));
+    const res = await fetch(`/api/stock?${params.toString()}`);
     if (!res.ok) return;
     const data = await res.json();
     for (const [sym, price] of Object.entries(data)) {
