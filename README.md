@@ -27,14 +27,18 @@ fetch_stock(["AAPL"])
 PY
 ```
 
+
 ### API 서버
 ```bash
 uvicorn api.main:app --reload
 ```
 
+
 ### 위젯 사용
 정적 호스팅 또는 기존 페이지에 `widget/widget.js`, `widget/sentimentWidget.js`를 포함하고
 `startPolling` 및 `startSentimentPolling` 함수를 호출하여 DOM을 업데이트합니다.
+`widget/index.html` 예제 페이지를 `python -m http.server -d widget`로 띄워 테스트할 수 있습니다.
+
 
 ## 기여 가이드
 1. 이슈를 확인하고 작업할 내용을 선택합니다.

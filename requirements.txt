@@ -1,6 +1,7 @@
+apscheduler
 fastapi
-uvicorn
+konlpy
+psycopg2-binary
 redis
 requests
-psycopg2-binary
-konlpy
+uvicorn

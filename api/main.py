@@ -1,9 +1,7 @@
 """FastAPI 기반 백엔드 서버."""
 import json
 import os
-from typing import List
-
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 import redis
 
 app = FastAPI(title="InvestAI API")
@@ -22,6 +20,7 @@ def get_sentiment(target: str):
 def get_rates(symbols: str):
     result = {}
     for sym in symbols.split(","):
+
         data = r.get(f"rates:{sym}")
         if data:
             result[sym] = json.loads(data)["value"]
@@ -29,6 +28,7 @@ def get_rates(symbols: str):
 
 
 @app.get("/api/stock")
+
 def get_stock(symbols: str):
     result = {}
     for sym in symbols.split(","):
