@@ -1,7 +1,6 @@
 """수집된 텍스트를 기반으로 Fear/Greed 지표를 계산합니다."""
 import json
 import os
-from typing import List
 
 import psycopg2
 import redis
@@ -9,10 +8,11 @@ from konlpy.tag import Okt
 
 WORD_SCORES = {"하락": -1, "폭락": -2, "상승": 1, "호재": 2}
 
+OKT = Okt()
+
 
 def _token_scores(text: str) -> int:
-    okt = Okt()
-    tokens = okt.morphs(text)
+    tokens = OKT.morphs(text)
     return sum(WORD_SCORES.get(tok, 0) for tok in tokens)
 
 

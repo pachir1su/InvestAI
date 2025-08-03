@@ -27,6 +27,13 @@ fetch_stock(["AAPL"])
 PY
 ```
 
+### 스케줄러
+`TARGETS` 환경 변수로 대상 심볼을 지정한 뒤 실행하면 1분 간격으로 수집하고 5분마다 점수를 갱신합니다.
+```bash
+export TARGETS=KOSPI,AAPL
+python data-collector/scheduler.py
+```
+
 ### API 서버
 ```bash
 uvicorn api.main:app --reload

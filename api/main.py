@@ -1,7 +1,6 @@
 """FastAPI 기반 백엔드 서버."""
 import json
 import os
-from typing import List
 
 from fastapi import FastAPI, HTTPException
 import redis
