@@ -23,19 +23,28 @@ def fetch_rates(symbols: Iterable[str]) -> Dict[str, float]:
 
 
 def fetch_stock(symbols: Iterable[str]) -> Dict[str, float]:
-    """IEX Cloud 등에서 주가를 가져옵니다. 토큰은 IEX_TOKEN 환경 변수 사용."""
-    token = os.getenv("IEX_TOKEN")
+    """Alpha Vantage에서 주가를 가져옵니다. 토큰은 ALPHAVANTAGE_API_KEY 환경 변수 사용."""
+    token = os.getenv("ALPHAVANTAGE_API_KEY")
     params = {
+        "function": "BATCH_STOCK_QUOTES",
         "symbols": ",".join(symbols),
-        "types": "quote",
-        "token": token,
+        "apikey": token,
     }
-    resp = requests.get(
-        "https://cloud.iexapis.com/stable/stock/market/batch", params=params, timeout=10
-    )
+    resp = requests.get("https://www.alphavantage.co/query", params=params, timeout=10)
     resp.raise_for_status()
-    data = resp.json()
-    prices = {sym: data.get(sym, {}).get("quote", {}).get("latestPrice") for sym in symbols}
+
+    data = resp.json().get("Stock Quotes", [])
+
+    # Initialize all requested symbols with None
+    prices: Dict[str, float] = {sym: None for sym in symbols}
+    for item in data:
+        sym = item.get("1. symbol")
+        price_str = item.get("2. price")
+        if sym in prices and price_str is not None:
+            try:
+                prices[sym] = float(price_str)
+            except ValueError:
+                prices[sym] = None
 
     r = redis.from_url(REDIS_URL)
     for sym, price in prices.items():
