@@ -30,7 +30,6 @@ def get_sentiment(target: str):
 
 
 @app.get("/api/rates")
-
 def get_rates(symbols: list[str] = Query(...)):
     result = {}
     for sym in symbols:
@@ -42,7 +41,6 @@ def get_rates(symbols: list[str] = Query(...)):
 
 
 @app.get("/api/stock")
-
 def get_stock(symbols: list[str] = Query(...)):
     result = {}
     for sym in symbols:

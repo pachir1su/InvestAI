@@ -12,7 +12,6 @@ OKT = Okt()
 
 def _token_scores(text: str) -> int:
     tokens = OKT.morphs(text)
-
     return sum(WORD_SCORES.get(tok, 0) for tok in tokens)
 
 
@@ -27,7 +26,6 @@ def calculate_score(target: str) -> dict:
         texts = [row[0] for row in cur.fetchall()]
         cur.execute("SELECT text FROM raw_tweets WHERE target=%s", (target,))
         texts += [row[0] for row in cur.fetchall()]
-
     r = redis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379/0"))
     if not texts:
         result = {"fear": 0.0, "greed": 0.0}
@@ -38,7 +36,6 @@ def calculate_score(target: str) -> dict:
     fear = sum(1 for s in scores if s < 0) / len(scores)
     greed = sum(1 for s in scores if s > 0) / len(scores)
     result = {"fear": fear, "greed": greed}
-
 
     r.setex(f"sentiment:{target}", 60, json.dumps(result))
     return result
