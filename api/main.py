@@ -2,6 +2,7 @@
 import json
 import os
 
+
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query
@@ -20,7 +21,6 @@ def root():
     """위젯 데모 페이지로 리디렉트."""
     return RedirectResponse("/static/index.html")
 
-
 @app.get("/api/sentiment")
 def get_sentiment(target: str):
     data = r.get(f"sentiment:{target}")
@@ -33,6 +33,7 @@ def get_sentiment(target: str):
 def get_rates(symbols: list[str] = Query(...)):
     result = {}
     for sym in symbols:
+
         data = r.get(f"rates:{sym}")
         if data:
             result[sym] = json.loads(data)["value"]
@@ -43,6 +44,7 @@ def get_rates(symbols: list[str] = Query(...)):
 def get_stock(symbols: list[str] = Query(...)):
     result = {}
     for sym in symbols:
+
         data = r.get(f"price:{sym}")
         if data:
             result[sym] = json.loads(data)["price"]

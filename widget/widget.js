@@ -1,4 +1,5 @@
 // 실시간 시세 위젯
+
 function setStatus(key, message, isError = false) {
   const el = document.querySelector(`[data-status="${key}"]`);
   if (el) {
@@ -12,6 +13,7 @@ export async function updateRates(symbols) {
   try {
     const params = new URLSearchParams();
     symbols.forEach((s) => params.append('symbols', s));
+
     const res = await fetch(`/api/rates?${params.toString()}`);
     if (!res.ok) {
       setStatus('rates', '업데이트 실패', true);
@@ -34,6 +36,7 @@ export async function updateRates(symbols) {
   } catch (err) {
     console.error('Failed to update rates', err);
     setStatus('rates', '업데이트 실패', true);
+
   }
 }
 
@@ -42,6 +45,7 @@ export async function updateStocks(symbols) {
   try {
     const params = new URLSearchParams();
     symbols.forEach((s) => params.append('symbols', s));
+
     const res = await fetch(`/api/stock?${params.toString()}`);
     if (!res.ok) {
       setStatus('stocks', '업데이트 실패', true);

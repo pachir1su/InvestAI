@@ -12,6 +12,7 @@ body {
   text-align: center;
   font-size: 1.4rem;
   margin-bottom: 2rem;
+
 }
 
 .cards {
@@ -48,6 +49,7 @@ body {
   color: #2ecc71;
 }
 
+
 .status {
   font-size: 0.8rem;
   color: #666;
@@ -58,7 +60,6 @@ body {
 .status.error {
   color: #e74c3c;
 }
-
 .bar-container {
   background: #eee;
   border-radius: 4px;

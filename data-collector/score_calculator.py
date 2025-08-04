@@ -1,7 +1,6 @@
 """수집된 텍스트를 기반으로 Fear/Greed 지표를 계산합니다."""
 import json
 import os
-
 import psycopg2
 import redis
 from konlpy.tag import Okt
