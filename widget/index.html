@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>InvestAI Dashboard</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <nav class="navbar">InvestAI 대시보드</nav>
+  <div class="cards">
+    <div class="card">
+      <h2>환율</h2>
+      <div class="row"><span>USD</span><span data-rate="USD">-</span></div>
+      <div class="row"><span>EUR</span><span data-rate="EUR">-</span></div>
+      <div class="status" data-status="rates">업데이트 대기중...</div>
+    </div>
+    <div class="card">
+      <h2>주가</h2>
+      <div class="row"><span>AAPL</span><span data-stock="AAPL">-</span></div>
+      <div class="status" data-status="stocks">업데이트 대기중...</div>
+    </div>
+    <div class="card">
+      <h2>감정 지수 (KOSPI)</h2>
+      <div class="row"><span>Fear</span><span data-fear="KOSPI">-</span></div>
+      <div class="bar-container"><div class="bar" data-fear-bar="KOSPI"></div></div>
+      <div class="row"><span>Greed</span><span data-greed="KOSPI">-</span></div>
+      <div class="bar-container"><div class="bar green" data-greed-bar="KOSPI"></div></div>
+      <div class="status" data-status="sentiment">업데이트 대기중...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { startPolling } from './widget.js';
+    import { startSentimentPolling } from './sentimentWidget.js';
+
+    startPolling(['USD', 'EUR'], ['AAPL']);
+    startSentimentPolling('KOSPI');
+  </script>
+</body>
+</html>
