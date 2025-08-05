@@ -1,7 +1,7 @@
 """환율과 주가를 외부 API에서 가져와 Redis에 캐시합니다."""
 import json
 import os
-from typing import Iterable, Dict
+from typing import Dict, Iterable
 
 import redis
 import requests
@@ -23,6 +23,7 @@ def fetch_rates(symbols: Iterable[str]) -> Dict[str, float]:
 
 
 def fetch_stock(symbols: Iterable[str]) -> Dict[str, float]:
+
     """Alpha Vantage에서 주가를 가져옵니다. 토큰은 ALPHAVANTAGE_API_KEY 환경 변수 사용."""
     token = os.getenv("ALPHAVANTAGE_API_KEY")
     params = {
@@ -47,6 +48,26 @@ def fetch_stock(symbols: Iterable[str]) -> Dict[str, float]:
                 prices[sym] = None
 
     r = redis.from_url(REDIS_URL)
-    for sym, price in prices.items():
+    prices: Dict[str, float] = {}
+    for sym in symbols:
+        params = {
+            "function": "GLOBAL_QUOTE",
+            "symbol": sym,
+            "apikey": token,
+        }
+        resp = requests.get("https://www.alphavantage.co/query", params=params, timeout=10)
+        resp.raise_for_status()
+
+        data = resp.json().get("Global Quote", {})
+        price_str = data.get("05. price")
+        price = None
+        if price_str is not None:
+            try:
+                price = float(price_str)
+            except ValueError:
+                price = None
+
+        prices[sym] = price
         r.setex(f"price:{sym}", 30, json.dumps({"symbol": sym, "price": price}))
+
     return prices

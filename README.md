@@ -28,6 +28,9 @@ PY
 ```
 
 #### 환경 변수
+
+환경 변수 예시는 저장소의 `.env.example` 파일을 참고하여 `.env`로 복사해 사용하세요.
+
 주가 데이터를 조회하려면 [Alpha Vantage](https://www.alphavantage.co/) API 키가 필요합니다.
 아래와 같이 `ALPHAVANTAGE_API_KEY` 환경 변수에 키를 설정하세요.
 
