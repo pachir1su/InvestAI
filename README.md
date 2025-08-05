@@ -27,6 +27,14 @@ fetch_stock(["AAPL"])
 PY
 ```
 
+#### 환경 변수
+주가 데이터를 조회하려면 [Alpha Vantage](https://www.alphavantage.co/) API 키가 필요합니다.
+아래와 같이 `ALPHAVANTAGE_API_KEY` 환경 변수에 키를 설정하세요.
+
+```bash
+export ALPHAVANTAGE_API_KEY=YOUR_KEY
+```
+
 =======
 
 
